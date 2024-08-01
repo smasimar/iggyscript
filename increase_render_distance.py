@@ -20,8 +20,14 @@ def process_binary_file(input_filename, output_filename, start_offset, jmp_offse
 			float_bytes = infile.read(4)
 			# Unpack the bytes to a little-endian float value
 			float_value = struct.unpack('<f', float_bytes)[0]
-			# Multiply the float value by 4
-			multiplied_value = float_value * 4
+			# Check if the float value is less than 1,000,000
+			if float_value < 1_000_000:
+				# Multiply the float value by 4
+				multiplied_value = float_value * 4
+			else:
+				# Do not modify the value if it's equal or higher than 1,000,000
+				multiplied_value = float_value
+
 			# Pack the modified float value into bytes
 			modified_bytes = struct.pack('<f', multiplied_value)
 			
